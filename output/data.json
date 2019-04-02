@@ -1,0 +1,26 @@
+[{
+    "name": "React16 | create-react-app配置less",
+    "content": "先暴露出webpackConfig安装less和less-loader打开webpack.config.dev.js只改两个地方：1. test正则加个less2. use数组里在css-loader后加（一定是css-loader后） build的时候webpack.config.prod.js同理。```ts\nnpm run eject\n```\n```ts\nnpm install less-loader less --save-dev\n```\n```ts\nrequire.resolve('less-loader'),\n```",
+    "href": "/blog/88910649"
+  },
+  {
+    "name": "rollup | 解决报错Error: '__moduleExports' is not exported by xxxx",
+    "content": "官方解释Occasionally you will see an error message like this:'foo' is not exported by bar.js (imported by baz.js)Import declarations must have corresponding export declarations in the imported module. For example, if you have import a from './a.js' in a module, and a.js doesn't have an export default declaration, or import {foo} from './b.js', and b.js doesn't export foo, Rollup cannot bundle the code.This error frequently occurs with CommonJS modules converted by rollup-plugin-commonjs, which makes a reasonable attempt to generate named exports from the CommonJS code but won't always succeed, because the freewheeling nature of CommonJS is at odds with the rigorous approach we benefit from in JavaScript modules. It can be solved by using the namedExports option, which allows you to manually fill in the information gaps.由于commonjs的某些特性，你必须显式指出某个文件的变量导出。例如：（我的一个react项目） 其中commonjs插件配置了选项，指明./lib/main.js文件的导出变量__moduleExports。namedExports配置项的格式： 然后重新运行rollup -c。```ts\nimport a from './a.js'\n```\n```ts\nexport default\n```\n```ts\nimport {foo} from './b.js'\n```\n```ts\nfoo\n```\n```ts\nimport resolve from 'rollup-plugin-node-resolve'\nimport commonjs from 'rollup-plugin-commonjs'\nimport json from 'rollup-plugin-json'\n\nexport default {\n  input: './lib/main.js',\n  output: {\n    file: 'build/bundle.min.js',\n    format: 'iife',\n    name: 'saber2pr',\n    banner: `var process = {\n      env: {\n        NODE_ENV: 'production'\n      }\n    }`\n  },\n  watch: {\n    include: 'lib/**'\n  },\n  plugins: [resolve(), commonjs({\n    'namedExports': {\n      './lib/main.js': ['__moduleExports']\n    }\n  }), json()]\n}\n```\n```ts\nOptions.namedExports?: {\n    // 文件路径：[导出变量名]\n    [key: string]: string[];\n}\n\n// 即键是文件路径，值是导出变量数组（字符串数组）。\n```",
+    "href": "/blog/87933258"
+  },
+  {
+    "name": "字符串replace | 在字符串指定位置插入字符串",
+    "content": "在anchorStr后插入joinStr原理就是把anchorStr和joinStr连起来，然后替换掉原来字符串中的anchorStr```ts\nconst joinStr = (str, anchorStr, joinStr) =>\n  str.replace(anchorStr, anchorStr.concat(joinStr))\n\nconst str = 'it is code.'\n\nconsole.log(joinStr(str, `it is `, 'js ')) // it is js code.\n```",
+    "href": "/blog/86758712"
+  },
+  {
+    "name": "遍历json | deepSearch遍历json数组每个属性",
+    "content": "```ts\nconst json: json = [\n      {\n        first: [\n          {\n            age: 1,\n            value: 'test1'\n          },\n          {\n            age: 233,\n            value: [\n              {\n                age: 1,\n                value: 'test1'\n              },\n              {\n                age: 233,\n                value: 'lala'\n              }\n            ]\n          }\n        ]\n      }\n    ]\n\n    const deepSearch = (arr, back) =>\n      arr.forEach(obj =>\n        Object.keys(obj).forEach(key =>\n          Array.isArray(obj[key]) ? deepSearch(obj[key], back) : back(obj[key])\n        )\n      )\n\n    deepSearch(json, value => console.log(value))\n```",
+    "href": "/blog/86717860"
+  },
+  {
+    "name": "字符串split | 计数指定字符串出现的次数",
+    "content": "如上，计数字符串中斜杠出现次数，将字符串按斜杠分割得到数组，数组长度减一则为出现次数。```ts\nconst slashCount = str => str.split('/').length - 1\n```",
+    "href": "/blog/86576954"
+  }
+]

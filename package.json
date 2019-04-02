@@ -1,0 +1,29 @@
+{
+  "name": "node-sipder-csdn",
+  "version": "0.0.1",
+  "description": "node-sipder-csdn",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Saber2pr/node-sipder-csdn.git"
+  },
+  "author": "saber2pr",
+  "license": "ISC",
+  "files": [
+    "lib/core/*",
+    "lib/index.*"
+  ],
+  "main": "./lib/index.js",
+  "scripts": {
+    "test": "node ./lib/app.js",
+    "start": "tsc --watch"
+  },
+  "devDependencies": {
+    "@types/node": "^11.13.0",
+    "typescript": "^3.2.1"
+  },
+  "dependencies": {
+    "@types/cheerio": "^0.22.11",
+    "cheerio": "^1.0.0-rc.2",
+    "saber-node": "^1.3.0"
+  }
+}
